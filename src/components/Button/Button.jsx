@@ -1,16 +1,8 @@
 import "./Button.css";
-import { useState } from "react";
 
-function Button() {
-  const [text, setText] = useState("Start");
-
-  const clickHandler = () => {
-    setText("Yo!!!");
-    console.log("click");
-  };
-
+function Button({ text, onClick }) {
   return (
-    <button onClick={clickHandler} className="button accent">
+    <button className="button accent" onClick={onClick}>
       {text}
     </button>
   );
