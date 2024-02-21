@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./JournalForm.css";
 import Button from "./../Button/Button";
 
-function JournalForm() {
+function JournalForm({ onSubmit }) {
   const [inputData, setInputData] = useState("");
 
   const inputChange = (e) => {
@@ -17,7 +17,9 @@ function JournalForm() {
 
     const formData = new FormData(e.target); //из FormData API
     const formProps = Object.fromEntries(formData);
-    console.log(formProps);
+
+    //console.log(formProps);
+    onSubmit(formProps);
   };
 
   return (
@@ -25,7 +27,7 @@ function JournalForm() {
       <input type="text" name="title" />
       <input type="date" name="date" />
       <input type="text" name="tag" value={inputData} onChange={inputChange} />
-      <textarea name="post"></textarea>
+      <textarea name="text"></textarea>
       <Button
         text="Save"
         onClick={() => {
