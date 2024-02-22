@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./JournalForm.module.css";
 import Button from "./../Button/Button";
+import cn from "classnames";
 
 function JournalForm({ onSubmit }) {
   const [formValidState, setFormValidState] = useState({
@@ -46,23 +47,23 @@ function JournalForm({ onSubmit }) {
       <input
         type="text"
         name="title"
-        className={`${styles["input"]} ${
-          formValidState.title ? "" : styles["invalid"]
-        }`}
+        className={cn(styles["input"], {
+          [styles["invalid"]]: !formValidState.title,
+        })}
       />
       <input
         type="date"
         name="date"
-        className={`${styles["input"]} ${
-          formValidState.date ? "" : styles["invalid"]
-        }`}
+        className={cn(styles["input"], {
+          [styles["invalid"]]: !formValidState.date,
+        })}
       />
       <input type="text" name="tag" />
       <textarea
         name="post"
-        className={`${styles["input"]} ${
-          formValidState.post ? "" : styles["invalid"]
-        }`}
+        className={cn(styles["input"], {
+          [styles["invalid"]]: !formValidState.post,
+        })}
       ></textarea>
       <Button text="Save" />
     </form>
