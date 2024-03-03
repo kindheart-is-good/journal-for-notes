@@ -3,6 +3,7 @@ import styles from "./JournalForm.module.css";
 import Button from "./../Button/Button";
 import cn from "classnames";
 import { INITIAL_STATE, formReducer } from "./JournalForm.state";
+import Input from "../Input/Input";
 
 function JournalForm({ onSubmit }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
@@ -62,15 +63,14 @@ function JournalForm({ onSubmit }) {
   return (
     <form className={styles["journal-form"]} onSubmit={addJournalItem}>
       <div>
-        <input
+        <Input
           type="text"
           onChange={onChange}
           value={values.title}
           ref={titleRef}
           name="title"
-          className={cn(styles["input-title"], {
-            [styles["invalid"]]: !isValid.title,
-          })}
+          appearence="title"
+          isValid={isValid.title}
         />
       </div>
       <div className={styles["form-row"]}>
@@ -78,16 +78,14 @@ function JournalForm({ onSubmit }) {
           <img src="/icon-date.svg" alt="icon-date" />
           <span>Date</span>
         </label>
-        <input
+        <Input
           type="date"
           onChange={onChange}
           value={values.date}
           ref={dateRef}
           name="date"
           id="date"
-          className={cn(styles["input"], {
-            [styles["invalid"]]: !isValid.date,
-          })}
+          isValid={isValid.date}
         />
       </div>
       <div className={styles["form-row"]}>
@@ -95,13 +93,12 @@ function JournalForm({ onSubmit }) {
           <img src="/icon-tag.svg" alt="icon-tag" />
           <span>Tag</span>
         </label>
-        <input
+        <Input
           type="text"
           onChange={onChange}
           value={values.text}
           name="tag"
           id="tag"
-          className={cn(styles["input"])}
         />
       </div>
 

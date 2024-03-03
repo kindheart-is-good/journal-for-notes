@@ -1,23 +1,3 @@
-.journal-form {
-	display: flex;
-	flex-direction: column;
-	gap: 30px;
-}
-
-
-
-
-.form-label {
-	display: flex;
-	align-items: center;
-	gap: 20px;
-	min-width: 100px;
-}
-
-.form-row {
-	display: flex;
-	align-items: center;
-}
 
 .input {
 	border: none;
@@ -29,6 +9,10 @@
 	font-family: "Open Sans", sans-serif;
 	border-bottom: 1px solid #827f7f;
 	width: 100%;
+}
+
+.input-title {
+	font-size: 32px;
 }
 
 .invalid {
