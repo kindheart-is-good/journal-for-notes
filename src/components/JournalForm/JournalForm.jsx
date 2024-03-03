@@ -24,15 +24,21 @@ function JournalForm({ onSubmit }) {
   useEffect(() => {
     if (isFormReadyToSubmit) {
       onSubmit(values);
+      dispatchForm({ type: "CLEAR" });
     }
   }, [isFormReadyToSubmit]);
 
   const addJournalItem = (e) => {
     e.preventDefault(); // для того чтобы не уходило обновление страницы, а вместо этого просто нажималась кнопка и туда передавался e
-    const formData = new FormData(e.target); //из FormData API
-    const formProps = Object.fromEntries(formData);
-    dispatchForm({ type: "SUBMIT", payload: formProps });
+    dispatchForm({ type: "SUBMIT" });
     //console.log(formProps);
+  };
+
+  const onChange = (e) => {
+    dispatchForm({
+      type: "SET_VALUE",
+      payload: { [e.target.name]: e.target.value },
+    });
   };
 
   return (
@@ -40,6 +46,8 @@ function JournalForm({ onSubmit }) {
       <div>
         <input
           type="text"
+          onChange={onChange}
+          value={values.title}
           name="title"
           className={cn(styles["input-title"], {
             [styles["invalid"]]: !isValid.title,
@@ -53,6 +61,8 @@ function JournalForm({ onSubmit }) {
         </label>
         <input
           type="date"
+          onChange={onChange}
+          value={values.date}
           name="date"
           id="date"
           className={cn(styles["input"], {
@@ -67,6 +77,8 @@ function JournalForm({ onSubmit }) {
         </label>
         <input
           type="text"
+          onChange={onChange}
+          value={values.text}
           name="tag"
           id="tag"
           className={cn(styles["input"])}
@@ -75,6 +87,8 @@ function JournalForm({ onSubmit }) {
 
       <textarea
         name="post"
+        onChange={onChange}
+        value={values.post}
         className={cn(styles["input"], {
           [styles["invalid"]]: !isValid.post,
         })}
