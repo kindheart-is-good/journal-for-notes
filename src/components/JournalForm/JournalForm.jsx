@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import styles from "./JournalForm.module.css";
 import Button from "./../Button/Button";
 import cn from "classnames";
@@ -7,12 +7,30 @@ import { INITIAL_STATE, formReducer } from "./JournalForm.state";
 function JournalForm({ onSubmit }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
   const { isValid, isFormReadyToSubmit, values } = formState;
+  const titleRef = useRef();
+  const dateRef = useRef();
+  const postRef = useRef();
+
+  const focusError = (isValid) => {
+    switch (true) {
+      case !isValid.title:
+        titleRef.current.focus();
+        break;
+      case !isValid.date:
+        dateRef.current.focus();
+        break;
+      case !isValid.post:
+        postRef.current.focus();
+        break;
+    }
+  };
 
   useEffect(() => {
     let timerId;
     if (!isValid.date || !isValid.post || !isValid.title) {
+      focusError(isValid);
       timerId = setTimeout(() => {
-        console.log("Очистка состояния");
+        //console.log("Очистка состояния");
         dispatchForm({ type: "RESET_VALIDITY" });
       }, 2000);
     }
@@ -48,6 +66,7 @@ function JournalForm({ onSubmit }) {
           type="text"
           onChange={onChange}
           value={values.title}
+          ref={titleRef}
           name="title"
           className={cn(styles["input-title"], {
             [styles["invalid"]]: !isValid.title,
@@ -63,6 +82,7 @@ function JournalForm({ onSubmit }) {
           type="date"
           onChange={onChange}
           value={values.date}
+          ref={dateRef}
           name="date"
           id="date"
           className={cn(styles["input"], {
@@ -89,6 +109,7 @@ function JournalForm({ onSubmit }) {
         name="post"
         onChange={onChange}
         value={values.post}
+        ref={postRef}
         className={cn(styles["input"], {
           [styles["invalid"]]: !isValid.post,
         })}
