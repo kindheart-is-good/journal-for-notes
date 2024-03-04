@@ -35,7 +35,7 @@ function App() {
   return (
     <div className="app">
       <LeftPanel>
-        <Header />
+        <Header changedUser={}/>
         <JournalAddButton />
         <JournalList items={mapItems(items)} />
       </LeftPanel>
