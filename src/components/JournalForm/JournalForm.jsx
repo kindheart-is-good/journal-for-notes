@@ -49,6 +49,13 @@ function JournalForm({ onSubmit }) {
     }
   }, [isFormReadyToSubmit, values, onSubmit]);
 
+  useEffect(() => {
+    dispatchForm({
+      type: "SET_VALUE",
+      payload: { userId },
+    });
+  }, [userId]);
+
   const addJournalItem = (e) => {
     e.preventDefault(); // для того чтобы не уходило обновление страницы, а вместо этого просто нажималась кнопка и туда передавался e
     dispatchForm({ type: "SUBMIT" });
@@ -64,7 +71,6 @@ function JournalForm({ onSubmit }) {
 
   return (
     <form className={styles["journal-form"]} onSubmit={addJournalItem}>
-      {userId}
       <div>
         <Input
           type="text"
