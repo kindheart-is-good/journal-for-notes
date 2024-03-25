@@ -6,7 +6,7 @@ import { INITIAL_STATE, formReducer } from "./JournalForm.state";
 import Input from "../Input/Input";
 import { UserContext } from "../../context/user.context";
 
-function JournalForm({ onSubmit, data }) {
+function JournalForm({ onSubmit, data, onDelete }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
   const { isValid, isFormReadyToSubmit, values } = formState;
   const titleRef = useRef();
@@ -74,9 +74,15 @@ function JournalForm({ onSubmit, data }) {
     });
   };
 
+  const deleteJournalItem = () => {
+    onDelete(data.id);
+    dispatchForm({ type: "CLEAR" });
+    dispatchForm({ type: "SET_VALUE", payload: { userId } });
+  };
+
   return (
     <form className={styles["journal-form"]} onSubmit={addJournalItem}>
-      <div>
+      <div className={styles["form-row"]}>
         <Input
           type="text"
           onChange={onChange}
@@ -86,6 +92,15 @@ function JournalForm({ onSubmit, data }) {
           appearence="title"
           isValid={isValid.title}
         />
+        {data.id && (
+          <button
+            className={styles["delete"]}
+            type="button"
+            onClick={deleteJournalItem}
+          >
+            <img src="/icon-recycle-bin.svg" alt="Delete button" />
+          </button>
+        )}
       </div>
       <div className={styles["form-row"]}>
         <label htmlFor="date" className={styles["form-label"]}>
