@@ -29,8 +29,12 @@ function JournalForm({ onSubmit, data, onDelete }) {
   };
 
   useEffect(() => {
+    if (!data) {
+      dispatchForm({ type: "CLEAR" });
+      dispatchForm({ type: "SET_VALUE", payload: { userId } });
+    }
     dispatchForm({ type: "SET_VALUE", payload: { ...data } });
-  }, [data]);
+  }, [data, userId]);
 
   useEffect(() => {
     let timerId;
@@ -92,7 +96,7 @@ function JournalForm({ onSubmit, data, onDelete }) {
           appearence="title"
           isValid={isValid.title}
         />
-        {data.id && (
+        {data?.id && (
           <button
             className={styles["delete"]}
             type="button"
